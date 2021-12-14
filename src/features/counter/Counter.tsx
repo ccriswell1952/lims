@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
-import { useAppSelector, useAppDispatch } from '../../app/hooks';
+import { useCounterSelector, useCounterDispatch } from '../../app/hooks/counter/counterHooks';
+
 import {
   decrement,
   increment,
@@ -12,12 +13,12 @@ import {
 import styles from './Counter.module.css';
 
 export function Counter() {
-  const count = useAppSelector(selectCount);
-  const dispatch = useAppDispatch();
+  const count = useCounterSelector(selectCount);
+  const dispatch = useCounterDispatch();
   const [incrementAmount, setIncrementAmount] = useState('2');
 
   const incrementValue = Number(incrementAmount) || 0;
-
+  console.log(`The api url = ${process.env.REACT_APP_PUBLIC_URL} `);
   return (
     <div>
       <div className={styles.row}>

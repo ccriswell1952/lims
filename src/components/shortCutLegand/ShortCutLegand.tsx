@@ -1,8 +1,7 @@
-import * as React from 'react';
-import { styled } from '@mui/material/styles';
-import {Box, Paper, Grid, Button, Dialog} from '@mui/material';
-import ShortcutIcon from '@mui/icons-material/Shortcut';
-import { common } from '@mui/material/colors';
+import * as React from "react";
+import { styled } from "@mui/material/styles";
+import { Box, Paper, Grid, Button, Dialog } from "@mui/material";
+import ShortcutIcon from "@mui/icons-material/Shortcut";
 
 export interface SimpleDialogProps {
   open: boolean;
@@ -10,27 +9,29 @@ export interface SimpleDialogProps {
 }
 
 const Item = styled(Paper)(({ theme }) => ({
-    ...theme.typography.body2,
-    padding: theme.spacing(1),
-    textAlign: 'left',
-    color: theme.palette.text.primary
-    }));
+  ...theme.typography.body2,
+  padding: theme.spacing(1),
+  textAlign: "left",
+  color: theme.palette.text.primary,
+}));
 
-function ShortCutLegandDialog (props: SimpleDialogProps){
+function ShortCutLegandDialog(props: SimpleDialogProps) {
   const { onClose, open } = props;
   const handleClose = () => {
     onClose();
   };
-  
+
   return (
-    <Dialog 
-    onClose={handleClose} 
-    open={open}
-    hideBackdrop={true}
-    scroll="body"
-    sx={{disableTransition: {
-      transition: 'none',
-    }}}
+    <Dialog
+      onClose={handleClose}
+      open={open}
+      hideBackdrop={true}
+      scroll="body"
+      sx={{
+        disableTransition: {
+          transition: "none",
+        },
+      }}
     >
       <Box sx={{ width: 400 }}>
         <Grid container spacing={0} rowSpacing={0}>
@@ -57,94 +58,94 @@ function ShortCutLegandDialog (props: SimpleDialogProps){
           </Grid>
           <Grid item xs={8}>
             <Item>Navigate to next column</Item>
-          </Grid>        
+          </Grid>
           <Grid item xs={4}>
             <Item>Shift-F4</Item>
           </Grid>
           <Grid item xs={8}>
             <Item>Navigate to previous column</Item>
-          </Grid>        
+          </Grid>
           <Grid item xs={4}>
             <Item>F5</Item>
           </Grid>
           <Grid item xs={8}>
             <Item>Opens new Discrepancy form</Item>
-          </Grid>        
+          </Grid>
           <Grid item xs={4}>
             <Item>Shift-F5</Item>
           </Grid>
           <Grid item xs={8}>
             <Item>Clears box discrepancy</Item>
-          </Grid>        
+          </Grid>
           <Grid item xs={4}>
             <Item>F6</Item>
           </Grid>
           <Grid item xs={8}>
             <Item>Insert Row</Item>
-          </Grid>        
+          </Grid>
           <Grid item xs={4}>
             <Item>Shift-F6</Item>
           </Grid>
           <Grid item xs={8}>
             <Item>Delete Row</Item>
-          </Grid>        
+          </Grid>
           <Grid item xs={4}>
             <Item>Shift-F7</Item>
           </Grid>
           <Grid item xs={8}>
             <Item>Clear Form</Item>
-          </Grid>        
+          </Grid>
           <Grid item xs={4}>
             <Item>Ctrl-End</Item>
           </Grid>
           <Grid item xs={8}>
             <Item>????????</Item>
-          </Grid>        
+          </Grid>
           <Grid item xs={4}>
             <Item>Ctrl-T</Item>
           </Grid>
           <Grid item xs={8}>
             <Item>Clear Item</Item>
-          </Grid>        
+          </Grid>
           <Grid item xs={4}>
             <Item>PgUp</Item>
           </Grid>
           <Grid item xs={8}>
             <Item>Navigate to First Row</Item>
-          </Grid>        
+          </Grid>
           <Grid item xs={4}>
             <Item>PgDn</Item>
           </Grid>
           <Grid item xs={8}>
             <Item>Navigate to Last Row</Item>
-          </Grid>        
+          </Grid>
           <Grid item xs={4}>
             <Item>F7</Item>
           </Grid>
           <Grid item xs={8}>
             <Item>Next LAN</Item>
-          </Grid>        
+          </Grid>
           <Grid item xs={4}>
             <Item>F8</Item>
           </Grid>
           <Grid item xs={8}>
             <Item>Executes query+Q30</Item>
-          </Grid>        
+          </Grid>
           <Grid item xs={4}>
             <Item>F10</Item>
           </Grid>
           <Grid item xs={8}>
             <Item>Commits changes to database</Item>
-          </Grid>  
+          </Grid>
         </Grid>
       </Box>
     </Dialog>
-  )
+  );
 }
 
 export default function ShortCutLegand() {
   const [open, setOpen] = React.useState(false);
- 
+
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -154,18 +155,15 @@ export default function ShortCutLegand() {
   };
   return (
     <div>
-      <Button 
+      <Button
         color="primary"
         id="btn-shortcut-legand"
         onClick={handleClickOpen}
-        startIcon={<ShortcutIcon  />}
+        startIcon={<ShortcutIcon />}
         title="Keyboard shortcut legand"
-    />
-
-      <ShortCutLegandDialog
-        open={open}
-        onClose={handleClose}
       />
+
+      <ShortCutLegandDialog open={open} onClose={handleClose} />
     </div>
   );
 }

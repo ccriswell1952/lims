@@ -158,7 +158,7 @@ export default function ShortCutLegand() {
         color="primary"
         id="btn-shortcut-legand"
         onClick={handleClickOpen}
-        startIcon={<ShortcutIcon sx={{ color: common.white }} />}
+        startIcon={<ShortcutIcon  />}
         title="Keyboard shortcut legand"
     />
 

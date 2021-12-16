@@ -1,14 +1,9 @@
 import React, { useState } from 'react';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
-import AppBar from '@mui/material/AppBar'
-import Tab from '@mui/material/Tab';
-import Tabs from '@mui/material/Tabs';
-import MenuItem from '@mui/material/MenuItem';
+import { common } from '@mui/material/colors';
+import { Toolbar, Menu, AppBar, Button, MenuItem, ButtonGroup } from '@mui/material';
 import { Link } from 'react-router-dom';
 import {navigationItems, INavHasChildrenObj} from './navigationData';
-import ShortCutLegand from '../../components/shortCutLegand/ShortCutLegand';
+// import ShortCutLegand from '../../components/shortCutLegand/ShortCutLegand';
 
 const hasChildrenObj = (parentMenuId: number): INavHasChildrenObj =>{
     let returnChildObj: INavHasChildrenObj = {
@@ -45,7 +40,7 @@ const hasChildrenObj = (parentMenuId: number): INavHasChildrenObj =>{
 export default function Header() {
 
     const [anchorEl, setAnchorEl] = useState<any>([]);
-    const [loggedOn, setLoggedOn] = useState(true);
+    const [loggedOn, setLoggedOn] = useState(false);
     const handleClick = (index: number, event: React.MouseEvent) => {
         setAnchorEl({ [index]: event.target });
       };
@@ -54,100 +49,97 @@ export default function Header() {
       setAnchorEl(null);
     };
 
-    let prevLoggedOn = false;
     const handleLogOn = () => {
-        let loggedOnStatus = loggedOn !== prevLoggedOn;
+        let loggedOnStatus = !loggedOn;
         setLoggedOn(loggedOnStatus);
-        prevLoggedOn = loggedOnStatus;
     }
     
     return (
         <AppBar position='fixed'>
           <Toolbar>
-              <Typography title="LIMS">
-                    LIMS |  
-              </Typography>
-              <Tabs centered>
-                {loggedOn && navigationItems.map((item, index) =>
+            <ButtonGroup>
+            {loggedOn && navigationItems.map((item, index) =>
+            {
+                let calledChildObj: INavHasChildrenObj = hasChildrenObj(item.parentMenu.parentMenuId);
+                let btnId = `nav-btn-${item.parentMenu.title.replaceAll(' ', '-').toLowerCase()}`;
+                if(!calledChildObj.hasChildren){
+                    return(
+                        <div key={index}>
+                            <Button 
+                                variant="text"
+                                sx={{color:common.white}}
+                                id={btnId}
+                                component={Link} 
+                                to={item.parentMenu.url}
+                                title={item.parentMenu.title}
+                            >
+                                {item.parentMenu.title}
+                            </Button>
+                        </div>
+                    )
+                }                  
+                else
                 {
-                    let calledChildObj: INavHasChildrenObj = hasChildrenObj(item.parentMenu.parentMenuId);
-                    let btnId = `nav-btn-${item.parentMenu.title.replaceAll(' ', '-').toLowerCase()}`;
-                    if(!calledChildObj.hasChildren){
-                        return(
-                            <div key={index}>
-                                <Tab 
-                                    //variant="contained"
-                                    color="primary"
-                                    id={btnId}
+                    return (
+                        <div key={index}>
+                            <Button 
+                                variant="text"
+                                sx={{color:common.white}}
+                                onClick={(e)=> handleClick(index, e)}
+                                id={btnId}
+                                title={item.parentMenu.title}
+                            >
+                                {item.parentMenu.title}
+                            </Button>
+                            <Menu 
+                                anchorEl={ 
+                                    // Check to see if the anchor is set.
+                                    anchorEl && anchorEl[index]
+                                }
+                                keepMounted
+                                open={
+                                    // Likewise, check here to see if the anchor is set.
+                                    Boolean(anchorEl && anchorEl[index])
+                                }
+                                onClose={handleClose}
+                                anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+                                transformOrigin={{ vertical: "top", horizontal: "center" }}
+                                >
+                                {calledChildObj.children.map((menuitems, menuindex) => (
+                                <MenuItem 
+                                    key={menuindex} 
+                                    selected={menuitems.menuItem.url===window.location.pathname}
                                     component={Link} 
-                                    to={item.parentMenu.url}
-                                    //size="small"
-                                    label={item.parentMenu.title}
-                                    title={item.parentMenu.title}
-                                />
-                            </div>
-                        )
-                    }                  
-                    else
-                    {
-                        return (
-                            <div key={index}>
-                                <Tab 
-                                    //variant="text"
-                                    color="primary"
-                                    onClick={(e)=> handleClick(index, e)}
-                                    id={btnId}
-                                    label={item.parentMenu.title}
-                                    title={item.parentMenu.title}
-                                />
-                                <Menu 
-                                    anchorEl={ 
-                                        // Check to see if the anchor is set.
-                                        anchorEl && anchorEl[index]
-                                    }
-                                    keepMounted
-                                    open={
-                                        // Likewise, check here to see if the anchor is set.
-                                        Boolean(anchorEl && anchorEl[index])
-                                    }
-                                    onClose={handleClose}
-                                    anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-                                    transformOrigin={{ vertical: "top", horizontal: "center" }}
+                                    to={menuitems.menuItem.url}
+                                    onClick={handleClose}
+                                    title={menuitems.menuItem.text}
                                     >
-                                    {calledChildObj.children.map((menuitems, menuindex) => (
-                                    <MenuItem 
-                                        key={menuindex} 
-                                        selected={menuitems.menuItem.url===window.location.pathname}
-                                        component={Link} 
-                                        to={menuitems.menuItem.url}
-                                        onClick={handleClose}
-                                        title={menuitems.menuItem.text}
-                                        >
-                                    {menuitems.menuItem.text}
-                                    </MenuItem>
-                                    ))}
-                                </Menu>
-                            </div>
-                        )
-                    }
-                })}
-                <div key="-1">
-                    <Tab 
-                        //variant="text"
-                        color="primary"
-                        id="btn-log-on"
-                        component={Link} 
-                        to="/logOn"
-                        //size="small"
-                        onClick={handleLogOn}
-                        label={loggedOn ? "Log Off" : "Log On"}
-                        title={loggedOn ? "Log Off" : "Log On"}
-                    />
-                </div>
-                <div key="-2">
-                    <ShortCutLegand  />
-                </div>
-              </Tabs>
+                                {menuitems.menuItem.text}
+                                </MenuItem>
+                                ))}
+                            </Menu>
+                        </div>
+                    )
+                }
+            })}
+            <div key="1000">
+                <Button 
+                    variant="text"
+                    sx={{color:common.white}}
+                    id="btn-log-on"
+                    component={Link} 
+                    to="/logOn"
+                    //size="small"
+                    onClick={handleLogOn}
+                    title={loggedOn ? "Log Off" : "Log On"}
+                    >
+                    {loggedOn ? "Log Off" : "Log On"}
+                </Button>
+            </div>
+            {/* <div key="-2">
+                <ShortCutLegand  />
+            </div> */}
+            </ButtonGroup>
            </Toolbar>
       </AppBar>
     )}

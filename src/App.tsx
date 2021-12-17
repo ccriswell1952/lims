@@ -4,10 +4,13 @@ import "./App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Header from "./components/navigation/Navigation";
 import Home from "./features/home/Home";
-import LogIn from "./features/logInOut/LogIn";
+import PreLogon from "./features/home/PreLogon";
 import FileNotFound from "./features/fileNotFound/FileNotFound";
 import LogOut from "./features/logInOut/LogOut";
+import LogIn from "./features/logInOut/LogIn";
+import UserStore from "./stores/UserStore";
 function App() {
+  const { userInfo } = UserStore.useState();
   return (
     <Router>
       <div className="App">
@@ -15,7 +18,10 @@ function App() {
           <Header />
           <br></br>
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route
+              path="/"
+              element={userInfo.isLoggedOn ? <Home /> : <PreLogon />}
+            />
             <Route path="/counter" element={<Counter />} />
             <Route path="/logoff" element={<LogOut />} />
             <Route path="/logon" element={<LogIn />} />

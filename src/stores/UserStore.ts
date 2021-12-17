@@ -8,7 +8,7 @@ const UserStore = new Store<IUserLogOnInfo>({
     roleIds: [],
     labId: -1,
     userId: -1,
-    ticket: "",
+    token: "",
   },
 });
 

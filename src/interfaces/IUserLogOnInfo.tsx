@@ -5,7 +5,7 @@ interface IUserLogOnInfo {
     roleIds: Number[];
     labId: number;
     userId: number;
-    ticket: string;
+    token: string;
   };
 }
 

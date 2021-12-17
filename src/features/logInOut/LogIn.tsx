@@ -1,8 +1,6 @@
-import React, { useEffect } from "react";
 import { Box, Grid, Button } from "@mui/material";
 import UserStore from "../../stores/UserStore";
 import { createAsyncAction, successResult, errorResult } from "pullstate";
-import { navigationItems } from "../../components/navigation/navigationData";
 import { useNavigate } from "react-router-dom";
 
 async function waitSeconds(seconds: number) {
@@ -17,7 +15,7 @@ const handleLogin = createAsyncAction(async () => {
       s.userInfo.isLoggedOn = true;
       s.userInfo.labId = 1;
       s.userInfo.roleIds = [1, 3];
-      s.userInfo.ticket = "asdfbgereter";
+      s.userInfo.token = "asdfbgereter";
       s.userInfo.userId = 1;
       s.userInfo.userName = "charles.criswell";
     });
@@ -28,23 +26,8 @@ const handleLogin = createAsyncAction(async () => {
   return successResult();
 });
 
-const LogInOut = () => {
+const LogIn = () => {
   let navigate = useNavigate();
-  //console.log("in loginout component", window.location.pathname);
-  useEffect(() => {
-    if (window.location.pathname === "/logoff") {
-      UserStore.update((s) => {
-        s.userInfo.isLoggedOn = false;
-        s.userInfo.labId = -1;
-        s.userInfo.roleIds = [];
-        s.userInfo.ticket = "";
-        s.userInfo.userId = -1;
-        s.userInfo.userName = "";
-      });
-      //console.log("logged off");
-      navigate("/logon");
-    }
-  });
   const [started, finished, result, updating] = handleLogin.useWatch();
   return (
     <div className="home">
@@ -80,4 +63,4 @@ const LogInOut = () => {
   );
 };
 
-export default LogInOut;
+export default LogIn;

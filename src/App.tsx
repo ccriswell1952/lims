@@ -4,8 +4,9 @@ import "./App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Header from "./components/navigation/Navigation";
 import Home from "./features/home/Home";
-import LogInOut from "./features/logInOut/LogInOut";
+import LogIn from "./features/logInOut/LogIn";
 import FileNotFound from "./features/fileNotFound/FileNotFound";
+import LogOut from "./features/logInOut/LogOut";
 function App() {
   return (
     <Router>
@@ -16,8 +17,8 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/counter" element={<Counter />} />
-            <Route path="/logoff" element={<LogInOut />} />
-            <Route path="/logon" element={<LogInOut />} />
+            <Route path="/logoff" element={<LogOut />} />
+            <Route path="/logon" element={<LogIn />} />
             <Route path="*" element={<FileNotFound />} />
           </Routes>
         </header>

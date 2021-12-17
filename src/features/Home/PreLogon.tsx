@@ -11,7 +11,8 @@ const PreLogin = () => {
           </Grid>
           <Grid item xs={12}>
             <p>
-              Content for first page user sees before being logged on goes here
+              Content for first page user sees before being logged on goes here.
+              Click the <b>Log On</b> link above to go to log onto LIMS.
             </p>
           </Grid>
         </Grid>

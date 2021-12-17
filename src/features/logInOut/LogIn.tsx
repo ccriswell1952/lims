@@ -52,7 +52,7 @@ const LogIn = () => {
             {started && !finished && (
               <div className="loading">Please wait...</div>
             )}
-            {finished && !result.error && navigate("/")}
+            {finished && !result.error && navigate("/home")}
             {finished && result.error && (
               <div className="error-block">{result.message}</div>
             )}

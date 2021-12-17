@@ -22,6 +22,7 @@ function App() {
               path="/"
               element={userInfo.isLoggedOn ? <Home /> : <PreLogon />}
             />
+            <Route path="/home" element={<Home />} />
             <Route path="/counter" element={<Counter />} />
             <Route path="/logoff" element={<LogOut />} />
             <Route path="/logon" element={<LogIn />} />
